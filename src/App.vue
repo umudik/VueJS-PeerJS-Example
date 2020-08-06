@@ -15,6 +15,11 @@ export default {
     });
 
     this.$store.state.peer.on("call", (call) => {
+      if (
+        this.$store.state.receiveCalls.findIndex((c) => c.peer == call.peer) !=
+        -1
+      )
+        return false;
       call.on("close", () => {
         console.log("call closed");
       });
