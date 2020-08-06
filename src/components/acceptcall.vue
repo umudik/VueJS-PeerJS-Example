@@ -2,7 +2,7 @@
   <div>
     <div>{{call.peer}}</div>
     <b-button variant="success" @click="call.answer($store.state.myLocalVideoStream);">Accept Call</b-button>
-    <b-button variant="danger">Decline Call</b-button>
+    <b-button variant="danger" @click="closeCall()">Decline or Close Call</b-button>
   </div>
 </template>
 
@@ -13,6 +13,9 @@ export default {
     return {};
   },
   methods: {
+    closeCall:function(){
+      this.call.close()
+    }
   },
 };
 </script>

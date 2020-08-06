@@ -20,8 +20,19 @@ export default {
         -1
       )
         return false;
+
       call.on("close", () => {
         console.log("call closed");
+        let index = this.$store.state.receiveCalls.findIndex(
+          (r) => r.peer == call.peer
+        );
+         this.$store.state.receiveCalls[index].close()
+        this.$store.state.receiveCalls.splice(index, 1);
+        
+        index = this.$store.state.remoteStreams.findIndex(
+          (r) => r.peer == call.peer
+        );
+        this.$store.state.remoteStreams.splice(index, 1);
       });
 
       call.on("stream", (remoteStream) => {
