@@ -8,7 +8,8 @@
     >
       <b-card-text>
         <div>
-          <h3>Connected {{ $store.state.remoteStreams.length}} Peer</h3>
+          <h3>{{ $store.state.receiveCalls.length}} Calls</h3>
+          <h3>{{ $store.state.receiveConnections.length}} Connections</h3>
         </div>
         <b-button block variant="secondary" class="mt-3" :to="`/chat`">GO</b-button>
       </b-card-text>

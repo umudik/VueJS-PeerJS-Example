@@ -4,19 +4,23 @@ import Peer from "peerjs";
 
 Vue.use(Vuex)
 
+
+
 export const store = new Vuex.Store({
     state: {
         id: "",
         remoteId: "",
         peer: new Peer(),
-        connections: {},
+
+        myLocalVideoStream: null,
         remoteStreams: [],
+        receiveCalls: [],
+        receiveConnections: [],
+        myConnections: [],
+        myCalls: [],
+
     },
-    getters: {
-        getRemoteIds: (state) => {
-            return state.remoteStreams.map(stream => stream.id)
-        }
-    },
+    getters: {},
     actions: {},
     modules: {}
 })

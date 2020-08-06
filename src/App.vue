@@ -7,41 +7,49 @@
 <script>
 export default {
   data: function () {
-    return {
-      connection: null,
-      connected: true,
-      messages: [],
-    };
+    return {};
   },
   beforeCreate: function () {
     this.$store.state.peer.on("open", (id) => {
       this.$store.state.id = id;
     });
 
-    var getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
-
     this.$store.state.peer.on("call", (call) => {
-      console.log("calling");
-      getUserMedia(
-        { video: true, audio: true },
-        (stream) => {
-          call.answer(stream); // Answer the call with an A/V stream.
-          call.on("stream", (remoteStream) => {
-            console.log("get call");
-            this.$store.state.coonections.push(call);
-            this.$store.state.remoteStreams.push(remoteStream);
-          });
-        },
-        function (err) {
-          console.log("Failed to get local stream", err);
-        }
-      );
+      call.on("close", () => {
+        console.log("call closed");
+      });
+
+      call.on("stream", (remoteStream) => {
+        console.log("call started");
+        this.$store.state.remoteStreams.push(remoteStream);
+      });
+      this.$store.state.receiveCalls.push(call);
+    });
+
+    this.$store.state.peer.on("connection", (connection) => {
+      connection.on("open", () => {
+        console.log("connection openned");
+      });
+      connection.on("data", () => {
+        console.log("connection sended data");
+      });
+      connection.on("close", () => {
+        console.log("connection closed");
+      });
+      this.$store.state.receiveConnections.push(connection);
     });
   },
-  created: function () {},
+  mounted: async function () {
+    let getUserMedia =
+      navigator.mediaDevices.getUserMedia ||
+      navigator.mediaDevices.webkitGetUserMedia ||
+      navigator.mediaDevices.mozGetUserMedia;
+
+    this.$store.state.myLocalVideoStream = await getUserMedia({
+      video: true,
+      audio: false,
+    });
+  },
 };
 </script>
 <style>

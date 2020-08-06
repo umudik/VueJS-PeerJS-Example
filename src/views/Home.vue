@@ -30,6 +30,11 @@
 <script>
 export default {
   name: "Home",
+  data: function () {
+    return {
+      
+    };
+  },
   computed: {
     connectId: {
       get() {
@@ -42,25 +47,17 @@ export default {
   },
   methods: {
     callRemote: function () {
-      var getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia;
-      getUserMedia(
-        { video: true },
-        (stream) => {
-          var call = this.$store.state.peer.call(this.connectId, stream);
-          console.log(call);
-          call.on("stream", () => {});
-          call.on("close", () => {
-            console.log("close");
-          });
-        },
-        (err) => {
-          console.log("Failed to get local stream", err);
-        }
+      let call = this.$store.state.peer.call(
+        this.connectId,
+        this.$store.state.myLocalVideoStream
       );
+      let dataConnection = this.$store.state.peer.connect(this.connectId);
+
+      this.$store.state.myConnections.push(dataConnection);
+      this.$store.state.myCalls.push(call);
     },
+  },
+  beforeCreated: function () {
   },
 };
 </script>

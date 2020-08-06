@@ -3,7 +3,6 @@
     <h6>Video</h6>
     <hr />
     <video class="box" ref="video" autoplay />
-    <div>{{}}</div>
   </div>
 </template>
 
@@ -17,8 +16,8 @@ export default {
   },
   mounted: function () {
     this.$refs.video.srcObject = this.videoStream;
-    console.log;
   },
+  beforeDestroy: function () {},
 };
 </script>
 
@@ -30,6 +29,6 @@ export default {
 .box {
   width: 400px;
   height: 380px;
-  position: relative;;
+  position: relative;
 }
 </style>
