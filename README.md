@@ -1,4 +1,4 @@
-# VueJS-PeerJS-Example
+# VueJS-PeerJS-BoostrapVue Example
 Not finished
 ## Project setup
 ```
