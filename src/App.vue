@@ -26,9 +26,9 @@ export default {
         let index = this.$store.state.receiveCalls.findIndex(
           (r) => r.peer == call.peer
         );
-         this.$store.state.receiveCalls[index].close()
+        this.$store.state.receiveCalls[index].close();
         this.$store.state.receiveCalls.splice(index, 1);
-        
+
         index = this.$store.state.remoteStreams.findIndex(
           (r) => r.peer == call.peer
         );
@@ -39,6 +39,8 @@ export default {
         console.log("call started");
         this.$store.state.remoteStreams.push(remoteStream);
       });
+
+      call.active = false;
       this.$store.state.receiveCalls.push(call);
     });
 

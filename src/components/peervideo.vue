@@ -1,7 +1,5 @@
 <template>
-  <div class="body text-center m-2 p-1 bg-dark text-secondary" style="float:left">
-    <h6>Video</h6>
-    <hr />
+  <div class="" style="float:left">
     <video class="box" ref="video" autoplay />
   </div>
 </template>
@@ -22,13 +20,8 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  border: 1px solid black;
-  border-radius: 10px;
-}
 .box {
   width: 400px;
   height: 380px;
-  position: relative;
 }
 </style>

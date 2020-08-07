@@ -1,14 +1,14 @@
 <template>
   <div>
     <b-row>
-      <b-col cols="2">
+      <b-col cols="2" class="text-center">
         <div v-if="$store.state.receiveCalls.length==0">There is no call</div>
         <div v-if="$store.state.receiveCalls.length!=0">Answer Calls</div>
-        <acceptcall v-for="c in $store.state.receiveCalls" :key="c" :call="c" />
+        <acceptcall v-for="c in $store.state.receiveCalls" :key="c.peer" :call="c" />
       </b-col>
       <b-col>
         <peervideo :videoStream="$store.state.myLocalVideoStream" />
-        <peervideo v-for="obj in $store.state.remoteStreams" :key="obj" :videoStream="obj" />
+        <peervideo v-for="obj in $store.state.remoteStreams" :key="obj.id" :videoStream="obj" />
       </b-col>
     </b-row>
     <b-row>

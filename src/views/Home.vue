@@ -51,6 +51,7 @@ export default {
         this.connectId,
         this.$store.state.myLocalVideoStream
       );
+
       let dataConnection = this.$store.state.peer.connect(this.connectId);
 
       this.$store.state.myConnections.push(dataConnection);

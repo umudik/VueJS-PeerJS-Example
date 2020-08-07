@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="w-100 p-2 text-center border">
     <div>{{call.peer}}</div>
-    <b-button variant="success" @click="call.answer($store.state.myLocalVideoStream);">Accept Call</b-button>
-    <b-button variant="danger" @click="closeCall()">Decline or Close Call</b-button>
+    <b-button v-if="!call.active" variant="outline-success" @click="openCall()">Accept Call</b-button>
+    <b-button v-else-if="call.active" variant="outline-danger" @click="closeCall()">Close Call</b-button>
   </div>
 </template>
 
@@ -13,9 +13,23 @@ export default {
     return {};
   },
   methods: {
-    closeCall:function(){
-      this.call.close()
-    }
+    closeCall: function () {
+      this.call.close();
+    },
+    openCall: function () {
+      this.call.answer(this.$store.state.myLocalVideoStream);
+      this.call.active = true;
+
+      let remoteCall = this.$store.state.peer.call(
+        this.call.peer,
+        this.$store.state.myLocalVideoStream
+      );
+
+      let dataConnection = this.$store.state.peer.connect(this.call.peer);
+
+      this.$store.state.myConnections.push(dataConnection);
+      this.$store.state.myCalls.push(remoteCall);
+    },
   },
 };
 </script>
