@@ -32,7 +32,7 @@ export const store = new Vuex.Store({
             let myConnectionIndex = state.myConnections.findIndex(item => item.peer == connectId)
             let myCallIndex = state.myCalls.findIndex(item => item.peer == connectId)
 
-            state.myConnections[myConnectionIndex].send('PAIR_CLOSED')
+            if (myConnectionIndex != -1) state.myConnections[myConnectionIndex].send('PAIR_CLOSED')
 
             if (callIndex != -1) state.receiveCalls[callIndex].close()
             if (connectionIndex != -1) state.receiveConnections[connectionIndex].close()
