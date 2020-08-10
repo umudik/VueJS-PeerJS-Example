@@ -2,10 +2,14 @@ import navbar from './navbar'
 import peervideo from './peervideo'
 import gotoroom from './gotoroom'
 import acceptcall from './acceptcall'
+import yourpeer from './yourpeer'
+import connectpeer from './connectpeer'
 
 export default {
-    'navbar': navbar,
-    'peervideo': peervideo,
-    'gotoroom': gotoroom,
-    'acceptcall': acceptcall
+    navbar,
+    peervideo,
+    gotoroom,
+    acceptcall,
+    yourpeer,
+    connectpeer
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar />
-    <router-view />
+    <router-view  />
   </div>
 </template>
 <script>
@@ -15,33 +15,21 @@ export default {
     });
 
     this.$store.state.peer.on("call", (call) => {
-      if (
-        this.$store.state.receiveCalls.findIndex((c) => c.peer == call.peer) !=
-        -1
-      )
-        return false;
-
       call.on("close", () => {
         console.log("call closed");
-        let index = this.$store.state.receiveCalls.findIndex(
-          (r) => r.peer == call.peer
-        );
-        this.$store.state.receiveCalls[index].close();
-        this.$store.state.receiveCalls.splice(index, 1);
-
-        index = this.$store.state.remoteStreams.findIndex(
-          (r) => r.peer == call.peer
-        );
-        this.$store.state.remoteStreams.splice(index, 1);
+        this.$store.commit("delete", {
+          target: "receiveCalls",
+          peer: call.peer,
+        });
       });
 
       call.on("stream", (remoteStream) => {
         console.log("call started");
-        this.$store.state.remoteStreams.push(remoteStream);
+        this.$store.commit("add", { target: "remoteStreams", data: remoteStream });
       });
 
       call.active = false;
-      this.$store.state.receiveCalls.push(call);
+      this.$store.commit("add", { target: "receiveCalls", data: call });
     });
 
     this.$store.state.peer.on("connection", (connection) => {
@@ -54,7 +42,7 @@ export default {
       connection.on("close", () => {
         console.log("connection closed");
       });
-      this.$store.state.receiveConnections.push(connection);
+    this.$store.commit("add", { target: "receiveConnections", data: connection });
     });
   },
   mounted: async function () {
@@ -71,4 +59,5 @@ export default {
 };
 </script>
 <style>
+
 </style>

@@ -15,6 +15,18 @@ export default {
   methods: {
     closeCall: function () {
       this.call.close();
+      this.$store.commit("delete", {
+        target: "receiveCalls",
+        peer: this.call.peer,
+      });
+      this.$store.commit("delete", {
+        target: "remoteStreams",
+        peer: this.call.peer,
+      });
+      this.$store.commit("delete", {
+        target: "receiveConnections",
+        peer: this.call.peer,
+      });
     },
     openCall: function () {
       this.call.answer(this.$store.state.myLocalVideoStream);
@@ -24,11 +36,10 @@ export default {
         this.call.peer,
         this.$store.state.myLocalVideoStream
       );
-
       let dataConnection = this.$store.state.peer.connect(this.call.peer);
 
-      this.$store.state.myConnections.push(dataConnection);
-      this.$store.state.myCalls.push(remoteCall);
+      this.$store.commit("add", { target: "myCalls", data: remoteCall });
+      this.$store.commit("add", { target: "myConnections", data: dataConnection,});
     },
   },
 };
