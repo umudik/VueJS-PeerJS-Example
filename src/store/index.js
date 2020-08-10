@@ -24,27 +24,44 @@ export const store = new Vuex.Store({
 
     },
     mutations: {
-        delete: function(state, payload) {
-            if (payload.target == undefined | typeof payload.target != "string" | Object.values(payload).length < 2) return false
-            let keys = Object.keys(payload)
-            let targetKey = keys.splice(keys.findIndex(item => item == "target"), 1)[0]
+        close: function(state, connectId) {
+            let callIndex = state.receiveCalls.findIndex(item => item.peer == connectId)
+            let connectionIndex = state.receiveConnections.findIndex(item => item.peer == connectId)
+            let remoteStreamIndex = state.remoteStreams.findIndex(item => item.peer == connectId)
 
-            let index = state[payload.target].findIndex(item => item[targetKey] == state[payload.target][targetKey])
-            state[payload.target].splice(index, 1)
+            let myConnectionIndex = state.myConnections.findIndex(item => item.peer == connectId)
+            let myCallIndex = state.myCalls.findIndex(item => item.peer == connectId)
+
+            state.myConnections[myConnectionIndex].send('PAIR_CLOSED')
+
+            if (callIndex != -1) state.receiveCalls[callIndex].close()
+            if (connectionIndex != -1) state.receiveConnections[connectionIndex].close()
+
+            state.remoteStreams.splice(remoteStreamIndex, 1)
+            state.receiveConnections.splice(callIndex, 1)
+            state.receiveCalls.splice(connectionIndex, 1)
+
+            state.myCalls.splice(myCallIndex, 1)
+            state.myConnections.splice(myConnectionIndex, 1)
         },
-        add: function(state, payload) {
-            if (payload.target == undefined | typeof payload.target != "string" | payload.data == undefined) {
-                console.log("[add] invalid object");
-                return false
-            }
-            console.log(payload)
-            state[payload.target].push(payload.data)
+        call: function(state, connectId) {
+            if (state.myConnections.findIndex(item => item.peer == connectId) != -1) return false;
+            if (state.myCalls.findIndex(item => item.peer == connectId) != -1) return false;
+
+            let call = state.peer.call(
+                connectId,
+                state.myLocalVideoStream
+            );
+
+            let dataConnection = state.peer.connect(connectId);
+
+            state.myConnections.push(dataConnection);
+            state.myCalls.push(call);
         },
-        hasIt(state, payload) {
-            if (state.receiveCalls.length == 0)
-                return false
-            else
-                return state[payload.target].findIndex(it => it.peer === payload.data.peer) == -1
+        answer: function(state, payload) {
+            let remoteStreamIndex = state.receiveCalls.findIndex(item => item.peer == payload)
+            state.receiveCalls[remoteStreamIndex].answer(state.myLocalVideoStream)
+            state.receiveCalls[remoteStreamIndex].active = true
         }
     },
     actions: {},

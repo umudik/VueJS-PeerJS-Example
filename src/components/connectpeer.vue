@@ -25,15 +25,7 @@ export default {
     },
     methods: {
         callRemote: function() {
-            let call = this.$store.state.peer.call(
-                this.connectId,
-                this.$store.state.myLocalVideoStream
-            );
-
-            let dataConnection = this.$store.state.peer.connect(this.connectId);
-
-            this.$store.state.myConnections.push(dataConnection);
-            this.$store.state.myCalls.push(call);
+            this.$store.commit('call',this.connectId)
         }
     }
 };

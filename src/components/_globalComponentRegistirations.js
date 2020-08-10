@@ -4,6 +4,7 @@ import gotoroom from './gotoroom'
 import acceptcall from './acceptcall'
 import yourpeer from './yourpeer'
 import connectpeer from './connectpeer'
+import myconnections from './myconnections'
 
 export default {
     navbar,
@@ -11,5 +12,6 @@ export default {
     gotoroom,
     acceptcall,
     yourpeer,
-    connectpeer
+    connectpeer,
+    myconnections,
 }
