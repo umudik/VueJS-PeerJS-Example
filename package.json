@@ -1,5 +1,5 @@
 {
-    "name": "Vue-PeerJS",
+    "name": "vuepeer",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -11,11 +11,15 @@
         "bootstrap-vue": "^2.16.0",
         "core-js": "^3.6.5",
         "peerjs": "^1.3.1",
+        "serve": "^11.3.2",
         "vue": "^2.6.11",
         "vue-clipboard2": "^0.3.1",
         "vue-peerjs": "^0.3.0",
         "vue-router": "^3.2.0",
-        "vuex": "^3.4.0"
+        "vuex": "^3.4.0",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.6",
+        "webpack-dev-server": "^3.7.2"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.4.0",
