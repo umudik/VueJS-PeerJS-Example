@@ -1,4 +1,4 @@
-# VueJS-PeerJS-BoostrapVue Example
+# VueJS-PeerJS-BoostrapVue Example(P2P VIDEO + AUDIO CHAT)
 Not finished
 ## Project setup
 ```
