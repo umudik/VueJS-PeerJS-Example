@@ -17,7 +17,7 @@
           <template v-slot:button-content>
             <em>About</em>
           </template>
-          <b-dropdown-item href="#">Settings</b-dropdown-item>
+          <b-dropdown-item to="Settings">Settings</b-dropdown-item>
           <b-dropdown-item href="#">About</b-dropdown-item>
              <b-dropdown-item href="https://github.com/QueennN">Github</b-dropdown-item>
         </b-nav-item-dropdown>
